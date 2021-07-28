@@ -15,6 +15,6 @@ RUN chmod +x /var/www/html/app.py; \
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Yekaterinburg /etc/localtime
 
-ENTRYPOINT ["python3", "/var/www/html/app.py"]
+CMD ["python3", "/var/www/html/app.py"]
 
 EXPOSE 8080
