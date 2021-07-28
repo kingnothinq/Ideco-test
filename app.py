@@ -1,7 +1,7 @@
 import logging
 
 from aiohttp import web
-from json import dumps
+from json import dumps, JSONDecodeError
 from sys import stdout
 
 import nshandler as ns
@@ -29,8 +29,11 @@ async def request_news(request):
 
 @routes.post('/api/news')
 async def add_news(request):
-    await ns.create_news(await request.json())
-    return web.Response(status=200)
+    try:
+        await ns.create_news(await request.json())
+        return web.Response(status=200)
+    except JSONDecodeError:
+        return web.HTTPBadRequest()
 
 
 @routes.delete('/api/news/{id}')
